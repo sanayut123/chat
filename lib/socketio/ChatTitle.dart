@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
+import 'ChatScreen.dart';
 import 'User.dart';
 
-enum UserOnlineStatus {connecting,online,ont_online}
-
 class ChatTitle extends StatelessWidget {
+  //
   const ChatTitle({
     Key key,
-    @required this.toChatUser,
+    @required this.chatUser,
     @required this.userOnlineStatus,
-  });
+  }) : super(key: key);
 
-  final User toChatUser;
+  final User chatUser;
   final UserOnlineStatus userOnlineStatus;
 
   @override
@@ -19,13 +19,13 @@ class ChatTitle extends StatelessWidget {
       alignment: Alignment.center,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Text(toChatUser.name),
+        children: <Widget>[
+          Text(chatUser.name),
           Text(
             _getStatusText(),
             style: TextStyle(
-              fontSize:14,
-              color: Colors.white70
+              fontSize: 14.0,
+              color: Colors.white70,
             ),
           )
         ],
@@ -33,14 +33,15 @@ class ChatTitle extends StatelessWidget {
     );
   }
 
-  _getStatusText(){
-    if (userOnlineStatus==UserOnlineStatus.online){
+  _getStatusText() {
+    if (userOnlineStatus == UserOnlineStatus.connecting) {
+      return 'connecting...';
+    }
+    if (userOnlineStatus == UserOnlineStatus.online) {
       return 'online';
     }
-    if(userOnlineStatus == UserOnlineStatus.ont_online){
+    if (userOnlineStatus == UserOnlineStatus.not_online) {
       return 'not online';
     }
-    return 'connecting...';
   }
-
 }

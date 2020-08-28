@@ -1,21 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:realtimechat2/socketio/ChatUsersScreen.dart';
-
+import 'ChatUsersScreen.dart';
 import 'Global.dart';
-import 'User.dart'; //โมเดมย่อมาจากอะไร
+import 'User.dart';
 
 class LoginScreen extends StatefulWidget {
-  static const String ROUTE_ID = "login_Screen";
+  //
+  LoginScreen() : super();
+
+  static const String ROUTE_ID = 'login_screen';
+
   @override
   _LoginScreenState createState() => _LoginScreenState();
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  //
   TextEditingController _usernameController;
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _usernameController = TextEditingController();
     G.initDummyUsers();
@@ -38,45 +41,48 @@ class _LoginScreenState extends State<LoginScreen> {
               textAlign: TextAlign.center,
               decoration: InputDecoration(
                 border: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(6.0))
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(5.0),
+                  ),
                 ),
                 filled: true,
                 fillColor: Colors.white,
-                contentPadding: EdgeInsets.all(20.0)
+                contentPadding: EdgeInsets.all(20.0),
               ),
             ),
             SizedBox(
               height: 20.0,
             ),
             OutlineButton(
-              child: Text("LOGIN"),
-              onPressed: (){
-                _loginBtnTap();
-              })
+                child: Text('LOGIN'),
+                onPressed: () {
+                  _loginBtnTap();
+                })
           ],
         ),
       ),
     );
   }
 
-  _loginBtnTap(){
-    if(_usernameController.text.isEmpty){
+  _loginBtnTap() async {
+    if (_usernameController.text.isEmpty) {
       return;
     }
+
     User me = G.dummyUsers[0];
-    if(_usernameController.text != 'a'){
+    if (_usernameController.text != 'a') {
       me = G.dummyUsers[1];
     }
+
     G.loggedInUser = me;
-    _openChatUsersListScreen(context);
+
+    openHomeScreen(context);
   }
 
-  _openChatUsersListScreen(context) async{
+  static openHomeScreen(BuildContext context) async {
     await Navigator.pushReplacementNamed(
-      context, 
-      ChatUsersScreen.ROUTE_ID
-      );
+      context,
+      ChatUsersScreen.ROUTE_ID,
+    );
   }
 }
-
-
